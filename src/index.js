@@ -16,10 +16,13 @@ refs.loadMoreBtn.addEventListener('click', onLoadMore)
 function onSearch(e) {
   e.preventDefault();
   clearGallery();
+  hideBtn();
   imageApiService.query = e.currentTarget.elements.query.value;
   imageApiService.resetPage(); 
   imageApiService.fetchImages().then(appendArticlesMarkup);
-  showBtn();
+  
+  console.log(imageApiService.fetchImages())
+  // if (imageApiService.fetchImages != 0) { showBtn() }
   
 }
 
@@ -30,6 +33,9 @@ function onLoadMore() {
 
 function appendArticlesMarkup(images) {
   refs.gallery.insertAdjacentHTML('beforeend', cardTpl(images));
+  console.log(images.length)
+  
+  if (images.length != 0) {showBtn()}
   onScrollPage(refs.gallery);
 }
 
@@ -39,6 +45,10 @@ function clearGallery() {
 
 function showBtn() {
   refs.loadMoreBtn.classList.remove('is-hidden')
+}
+
+function hideBtn() {
+  refs.loadMoreBtn.classList.add('is-hidden')
 }
 
 function onScrollPage(el) {
